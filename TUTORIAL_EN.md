@@ -7,7 +7,7 @@ Leaf champions below philosophies:
 
 * Simple APIs. Leaf tends to provide simple and plain interfaces which are always best for use.
 * Self-healing. Leaf always tries to salvage the process from runtime errors instead of leaving it to crash.
-* Multi-core support. Leaf utilize its modules and [leaf/go](https://github.com/name5566/leaf/tree/master/go) to make use of CPU resouces at maximum while avoiding varieties of side effects may be caused.
+* Multi-core support. Leaf utilize its modules and [leaf/go](go) to make use of CPU resouces at maximum while avoiding varieties of side effects may be caused.
 
 * Module-based.
 
@@ -17,7 +17,7 @@ Leaf's Modules
 A game server implemented with Leaf may include many modules (e.g. [LeafServer](https://github.com/name5566/leafserver)) which all share below traits:
 
 * Each module runs inside a separate goroutine
-* Modules communicate with one another via a light weight RPC channel([leaf/chanrpc](https://github.com/name5566/leaf/tree/master/chanrpc))
+* Modules communicate with one another via a light weight RPC channel([leaf/chanrpc](chanrpc))
 
 Leaf suggests not to take in too many modules in your game server implementation.
 

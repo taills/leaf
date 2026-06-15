@@ -7,7 +7,7 @@ Leaf 的关注点：
 
 * 良好的使用体验。Leaf 总是尽可能的提供简洁和易用的接口，尽可能的提升开发的效率
 * 稳定性。Leaf 总是尽可能的恢复运行过程中的错误，避免崩溃
-* 多核支持。Leaf 通过模块机制和 [leaf/go](https://github.com/name5566/leaf/tree/master/go) 尽可能的利用多核资源，同时又尽量避免各种副作用
+* 多核支持。Leaf 通过模块机制和 [leaf/go](go) 尽可能的利用多核资源，同时又尽量避免各种副作用
 * 模块机制。
 
 Leaf 的模块机制
@@ -16,7 +16,7 @@ Leaf 的模块机制
 一个 Leaf 开发的游戏服务器由多个模块组成（例如 [LeafServer](https://github.com/name5566/leafserver)），模块有以下特点：
 
 * 每个模块运行在一个单独的 goroutine 中
-* 模块间通过一套轻量的 RPC 机制通讯（[leaf/chanrpc](https://github.com/name5566/leaf/tree/master/chanrpc)）
+* 模块间通过一套轻量的 RPC 机制通讯（[leaf/chanrpc](chanrpc)）
 
 Leaf 不建议在游戏服务器中设计过多的模块。
 
