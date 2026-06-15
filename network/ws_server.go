@@ -19,6 +19,7 @@ type WSServer struct {
 	CertFile        string
 	KeyFile         string
 	NewAgent        func(*WSConn) Agent
+	CheckOrigin     func(r *http.Request) bool
 	ln              net.Listener
 	handler         *WSHandler
 }
@@ -125,7 +126,7 @@ func (server *WSServer) Start() {
 		conns:           make(WebsocketConnSet),
 		upgrader: websocket.Upgrader{
 			HandshakeTimeout: server.HTTPTimeout,
-			CheckOrigin:      func(_ *http.Request) bool { return true },
+			CheckOrigin:      server.CheckOrigin,
 		},
 	}
 

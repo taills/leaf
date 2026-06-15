@@ -2,12 +2,7 @@ package util
 
 import (
 	"math/rand"
-	"time"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 func RandGroup(p ...uint32) int {
 	if p == nil {

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"github.com/name5566/leaf/conf"
 	"github.com/name5566/leaf/network"
-	"math"
 	"strconv"
 	"strings"
 )
@@ -18,7 +17,10 @@ func Init() {
 
 	server = new(network.TCPServer)
 	server.Addr = "localhost:" + strconv.Itoa(conf.ConsolePort)
-	server.MaxConnNum = int(math.MaxInt32)
+	server.MaxConnNum = conf.ConsoleMaxConnNum
+	if server.MaxConnNum <= 0 {
+		server.MaxConnNum = 10
+	}
 	server.PendingWriteNum = 100
 	server.NewAgent = newAgent
 
@@ -32,28 +34,31 @@ func Destroy() {
 }
 
 type Agent struct {
-	conn   *network.TCPConn
-	reader *bufio.Reader
+	conn *network.TCPConn
 }
 
 func newAgent(conn *network.TCPConn) network.Agent {
 	a := new(Agent)
 	a.conn = conn
-	a.reader = bufio.NewReader(conn)
 	return a
 }
 
 func (a *Agent) Run() {
+	scanner := bufio.NewScanner(a.conn)
+	// Limit console line length to 4KB to prevent OOM
+	buf := make([]byte, 4096)
+	scanner.Buffer(buf, 4096)
+
 	for {
 		if conf.ConsolePrompt != "" {
 			a.conn.Write([]byte(conf.ConsolePrompt))
 		}
 
-		line, err := a.reader.ReadString('\n')
-		if err != nil {
+		if !scanner.Scan() {
 			break
 		}
-		line = strings.TrimSuffix(line[:len(line)-1], "\r")
+		line := scanner.Text()
+		line = strings.TrimSpace(line)
 
 		args := strings.Fields(line)
 		if len(args) == 0 {

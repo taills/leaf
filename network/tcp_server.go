@@ -67,20 +67,20 @@ func (server *TCPServer) run() {
 	for {
 		conn, err := server.ln.Accept()
 		if err != nil {
-			if ne, ok := err.(net.Error); ok && ne.Temporary() {
-				if tempDelay == 0 {
-					tempDelay = 5 * time.Millisecond
-				} else {
-					tempDelay *= 2
-				}
-				if max := 1 * time.Second; tempDelay > max {
-					tempDelay = max
-				}
-				log.Release("accept error: %v; retrying in %v", err, tempDelay)
-				time.Sleep(tempDelay)
-				continue
+			if server.ln == nil {
+				return
 			}
-			return
+			if tempDelay == 0 {
+				tempDelay = 5 * time.Millisecond
+			} else {
+				tempDelay *= 2
+			}
+			if max := 1 * time.Second; tempDelay > max {
+				tempDelay = max
+			}
+			log.Release("accept error: %v; retrying in %v", err, tempDelay)
+			time.Sleep(tempDelay)
+			continue
 		}
 		tempDelay = 0
 

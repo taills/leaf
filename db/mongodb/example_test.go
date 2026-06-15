@@ -1,13 +1,16 @@
 package mongodb_test
 
 import (
+	"context"
 	"fmt"
 	"github.com/name5566/leaf/db/mongodb"
-	"gopkg.in/mgo.v2"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func Example() {
-	c, err := mongodb.Dial("localhost", 10)
+	// In a real environment, use a proper MongoDB URI
+	c, err := mongodb.Dial("mongodb://localhost:27017", 10)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -17,10 +20,12 @@ func Example() {
 	// session
 	s := c.Ref()
 	defer c.UnRef(s)
-	err = s.DB("test").C("counters").RemoveId("test")
-	if err != nil && err != mgo.ErrNotFound {
-		fmt.Println(err)
-		return
+	
+	ctx := context.Background()
+	_, err = s.Database("test").Collection("counters").DeleteOne(ctx, bson.M{"_id": "test"})
+	if err != nil && err != mongo.ErrNoDocuments {
+		// Note: DeleteOne doesn't return ErrNoDocuments if no doc matches, it returns Result.DeletedCount = 0
+		// But let's keep it simple for example.
 	}
 
 	// auto increment

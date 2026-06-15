@@ -11,10 +11,13 @@ var (
 	// console
 	ConsolePort   int
 	ConsolePrompt string = "Leaf# "
+	ConsoleMaxConnNum int
 	ProfilePath   string
 
 	// cluster
 	ListenAddr      string
 	ConnAddrs       []string
 	PendingWriteNum int
+	MaxConnNum      int
+	MaxMsgLen       uint32
 )
