@@ -391,7 +391,7 @@ game.ChanRPC.Go("NewAgent", a)
 
 Here NewAgent will be called with a parameter a which can be retrieved from args[0], the rest can be done in the same manner.
 
-More references are at [leaf/chanrpc](https://github.com/name5566/leaf/blob/master/chanrpc). Please be noted, no matter how delicate the encapsulation is, calling function across goroutines cannot be that straight. Try not to create too many modules and interactions. Modules designed in Leaf are supposed to decouple the businesses from others rather make most use of CPU cores. The correct way to make most use of CPU cores is to use goroutine properly.
+More references are at [leaf/chanrpc](chanrpc). Please be noted, no matter how delicate the encapsulation is, calling function across goroutines cannot be that straight. Try not to create too many modules and interactions. Modules designed in Leaf are supposed to decouple the businesses from others rather make most use of CPU cores. The correct way to make most use of CPU cores is to use goroutine properly.
 
 ### Leaf Go
 
@@ -433,7 +433,7 @@ The result are:
 
 skeleton.Go() accepts two function parameters, first one will be exercised in a separate goroutine and afterwards the second be exercised within the same goroutine. And res can only be used by one goroutine at one moment so nothing more need to be done for synchronization. This implementation makes CPU can be fully used while no need to block goroutines. It is quite convenient when shared resources are used.
 
-More references are at [leaf/go](https://github.com/name5566/leaf/blob/master/go)。
+More references are at [leaf/go](go)。
 
 ### Leaf timer
 
@@ -453,7 +453,7 @@ skeleton.AfterFunc(5 * time.Second, func() {
 
 Besides, Leaf timer support [cron expressions](https://en.wikipedia.org/wiki/Cron) to support scheduled jobs like start at 9am daily or Sunday 6pm weekly.
 
-More references are at [leaf/timer](https://github.com/name5566/leaf/blob/master/timer)。
+More references are at [leaf/timer](timer)。
 
 ### Leaf log
 
@@ -477,11 +477,11 @@ LogFlag = log.Lshortfile
 LogFlag：[https://golang.org/pkg/log/#pkg-constants](https://golang.org/pkg/log/#pkg-constants)
 
 
-More references are at [leaf/log](https://github.com/name5566/leaf/blob/master/log).
+More references are at [leaf/log](log).
 
 ### Leaf recordfile
 
-Leaf recordfile is formatted in CSV([Example](https://github.com/name5566/leaf/blob/master/recordfile/test.txt)). recordfile is to manage the configuration for game. The usage of recordfile in LeafServer is quite simple:
+Leaf recordfile is formatted in CSV([Example](recordfile/test.txt)). recordfile is to manage the configuration for game. The usage of recordfile in LeafServer is quite simple:
 
 1. Create a CSV file under bin/gamedata
 2. Call readRf() to read it in gamedata module
@@ -520,7 +520,7 @@ func init() {
 }
 ```
 
-Refer to [leaf/recordfile](https://github.com/name5566/leaf/blob/master/recordfile) for more details.
+Refer to [leaf/recordfile](recordfile) for more details.
 
 Learn more
 ----------

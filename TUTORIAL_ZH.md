@@ -386,7 +386,7 @@ game.ChanRPC.Go("NewAgent", a)
 
 这里调用 NewAgent 并传递参数 a，我们在 rpcNewAgent 的参数 args[0] 中可以取到 a（args[1] 表示第二个参数，以此类推）。
 
-更加详细的用法可以参考 [leaf/chanrpc](https://github.com/name5566/leaf/blob/master/chanrpc)。需要注意的是，无论封装多么精巧，跨 goroutine 的调用总不能像直接的函数调用那样简单直接，因此除非必要我们不要构建太多的模块，模块间不要太频繁的交互。模块在 Leaf 中被设计出来最主要是用于划分功能而非利用多核，Leaf 认为在模块内按需使用 goroutine 才是多核利用率问题的解决之道。
+更加详细的用法可以参考 [leaf/chanrpc](chanrpc)。需要注意的是，无论封装多么精巧，跨 goroutine 的调用总不能像直接的函数调用那样简单直接，因此除非必要我们不要构建太多的模块，模块间不要太频繁的交互。模块在 Leaf 中被设计出来最主要是用于划分功能而非利用多核，Leaf 认为在模块内按需使用 goroutine 才是多核利用率问题的解决之道。
 
 ### Leaf Go
 
@@ -428,7 +428,7 @@ log.Debug("2")
 
 这里的 Go 方法接收 2 个函数作为参数，第一个函数会被放置在一个新创建的 goroutine 中执行，在其执行完成之后，第二个函数会在当前 goroutine 中被执行。由此，我们可以看到变量 res 同一时刻总是只被一个 goroutine 访问，这就避免了同步机制的使用。Go 的设计使得 CPU 得到充分利用，避免操作阻塞当前 goroutine，同时又无需为共享资源同步而忧心。
 
-更加详细的用法可以参考 [leaf/go](https://github.com/name5566/leaf/blob/master/go)。
+更加详细的用法可以参考 [leaf/go](go)。
 
 ### Leaf timer
 
@@ -448,7 +448,7 @@ skeleton.AfterFunc(5 * time.Second, func() {
 
 另外，Leaf timer 还支持 [cron 表达式](https://en.wikipedia.org/wiki/Cron)，用于实现诸如“每天 9 点执行”、“每周末 6 点执行”的逻辑。
 
-更加详细的用法可以参考 [leaf/timer](https://github.com/name5566/leaf/blob/master/timer)。
+更加详细的用法可以参考 [leaf/timer](timer)。
 
 ### Leaf log
 
@@ -472,11 +472,11 @@ LogFlag = log.Lshortfile
 可用的 LogFlag 见：[https://golang.org/pkg/log/#pkg-constants](https://golang.org/pkg/log/#pkg-constants)
 
 
-更加详细的用法可以参考 [leaf/log](https://github.com/name5566/leaf/blob/master/log)。
+更加详细的用法可以参考 [leaf/log](log)。
 
 ### Leaf recordfile
 
-Leaf 的 recordfile 是基于 CSV 格式（范例见[这里](https://github.com/name5566/leaf/blob/master/recordfile/test.txt)）。recordfile 用于管理游戏配置数据。在 LeafServer 中使用 recordfile 非常简单：
+Leaf 的 recordfile 是基于 CSV 格式（范例见[这里](recordfile/test.txt)）。recordfile 用于管理游戏配置数据。在 LeafServer 中使用 recordfile 非常简单：
 
 1. 将 CSV 文件放置于 bin/gamedata 目录中
 2. 在 gamedata 模块中调用函数 readRf 读取 CSV 文件
@@ -515,7 +515,7 @@ func init() {
 }
 ```
 
-更加详细的用法可以参考 [leaf/recordfile](https://github.com/name5566/leaf/blob/master/recordfile)。
+更加详细的用法可以参考 [leaf/recordfile](recordfile)。
 
 了解更多
 ---------------
