@@ -69,8 +69,8 @@ func DeepCopy(dst, src interface{}) {
 	deepCopy(valueDst, valueSrc)
 }
 
-func DeepClone(v interface{}) interface{} {
+func DeepClone[T any](v T) T {
 	dst := reflect.New(reflect.TypeOf(v)).Elem()
 	deepCopy(dst, reflect.ValueOf(v))
-	return dst.Interface()
+	return dst.Interface().(T)
 }

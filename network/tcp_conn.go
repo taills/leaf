@@ -44,7 +44,9 @@ func newTCPConn(conn net.Conn, pendingWriteNum int, msgParser *MsgParser) *TCPCo
 }
 
 func (tcpConn *TCPConn) doDestroy() {
-	tcpConn.conn.(*net.TCPConn).SetLinger(0)
+	if tcp, ok := tcpConn.conn.(*net.TCPConn); ok {
+		tcp.SetLinger(0)
+	}
 	tcpConn.conn.Close()
 
 	if !tcpConn.closeFlag {

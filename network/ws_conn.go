@@ -46,7 +46,9 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32) *WSC
 }
 
 func (wsConn *WSConn) doDestroy() {
-	wsConn.conn.UnderlyingConn().(*net.TCPConn).SetLinger(0)
+	if tcp, ok := wsConn.conn.UnderlyingConn().(*net.TCPConn); ok {
+		tcp.SetLinger(0)
+	}
 	wsConn.conn.Close()
 
 	if !wsConn.closeFlag {
