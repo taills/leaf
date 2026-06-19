@@ -69,7 +69,7 @@ git clone https://github.com/taills/leafserver
 设置 leafserver 目录到 GOPATH 环境变量后获取 Leaf：
 
 ```
-go get github.com/name5566/leaf
+go get github.com/taills/leaf
 ```
 
 编译 LeafServer：
@@ -100,7 +100,7 @@ go install server
 package msg
 
 import (
-	"github.com/name5566/leaf/network"
+	"github.com/taills/leaf/network"
 )
 
 var Processor network.Processor
@@ -116,7 +116,7 @@ Processor 为消息的处理器（可由用户自定义），这里我们使用 
 package msg
 
 import (
-	"github.com/name5566/leaf/network/json"
+	"github.com/taills/leaf/network/json"
 )
 
 // 使用默认的 JSON 消息处理器（默认还提供了 protobuf 消息处理器）
@@ -157,8 +157,8 @@ func init() {
 package internal
 
 import (
-	"github.com/name5566/leaf/log"
-	"github.com/name5566/leaf/gate"
+	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/gate"
 	"reflect"
 	"server/msg"
 )
@@ -319,7 +319,7 @@ var (
 package internal
 
 import (
-	"github.com/name5566/leaf/module"
+	"github.com/taills/leaf/module"
 	"server/base"
 )
 
@@ -355,7 +355,7 @@ func (m *Module) OnDestroy() {
 package internal
 
 import (
-	"github.com/name5566/leaf/gate"
+	"github.com/taills/leaf/gate"
 )
 
 func init() {
@@ -533,9 +533,9 @@ package main
 import (
 	"context"
 
-	"github.com/name5566/leaf/db"
-	"github.com/name5566/leaf/db/sqlite"
-	// "github.com/name5566/leaf/db/postgres"
+	"github.com/taills/leaf/db"
+	"github.com/taills/leaf/db/sqlite"
+	// "github.com/taills/leaf/db/postgres"
 )
 
 func main() {
@@ -569,4 +569,4 @@ func main() {
 了解更多
 ---------------
 
-阅读 Wiki 获取更多的帮助：[https://github.com/name5566/leaf/wiki](https://github.com/name5566/leaf/wiki)
+阅读 Wiki 获取更多的帮助：[https://github.com/taills/leaf/wiki](https://github.com/taills/leaf/wiki)

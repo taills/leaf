@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/name5566/leaf/util"
+	"github.com/taills/leaf/util"
 )
 
 func TestMap(t *testing.T) {

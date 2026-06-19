@@ -3,7 +3,7 @@ package util_test
 import (
 	"testing"
 
-	"github.com/name5566/leaf/util"
+	"github.com/taills/leaf/util"
 )
 
 func TestRandGroupDeterministic(t *testing.T) {

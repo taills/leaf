@@ -2,8 +2,8 @@ package console
 
 import (
 	"bufio"
-	"github.com/name5566/leaf/conf"
-	"github.com/name5566/leaf/network"
+	"github.com/taills/leaf/conf"
+	"github.com/taills/leaf/network"
 	"strconv"
 	"strings"
 )

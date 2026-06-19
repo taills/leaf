@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/name5566/leaf/db"
-	"github.com/name5566/leaf/db/postgres"
+	"github.com/taills/leaf/db"
+	"github.com/taills/leaf/db/postgres"
 )
 
 // These tests require a real PostgreSQL instance. Set LEAF_PG_DSN, e.g.

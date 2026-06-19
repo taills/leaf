@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/name5566/leaf/db"
-	"github.com/name5566/leaf/db/sqlite"
+	"github.com/taills/leaf/db"
+	"github.com/taills/leaf/db/sqlite"
 )
 
 func newStore(t testing.TB) db.Store {
