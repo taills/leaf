@@ -13,7 +13,7 @@ Leaf 的关注点：
 Leaf 的模块机制
 ---------------
 
-一个 Leaf 开发的游戏服务器由多个模块组成（例如 [LeafServer](https://github.com/name5566/leafserver)），模块有以下特点：
+一个 Leaf 开发的游戏服务器由多个模块组成（例如 [LeafServer](https://github.com/taills/leafserver)），模块有以下特点：
 
 * 每个模块运行在一个单独的 goroutine 中
 * 模块间通过一套轻量的 RPC 机制通讯（[leaf/chanrpc](chanrpc)）
@@ -46,7 +46,7 @@ Leaf 源码概览
 ---------------
 
 * leaf/chanrpc 提供了一套基于 channel 的 RPC 机制，用于游戏服务器模块间通讯
-* leaf/db 数据库相关，目前支持 [MongoDB](https://www.mongodb.org/)
+* leaf/db 数据库相关，通过统一的 `Store` 接口支持 [SQLite](https://www.sqlite.org/)（纯 Go 驱动 `modernc.org/sqlite`）和 [PostgreSQL](https://www.postgresql.org/)（`jackc/pgx/v5`，兼容 PG 18），业务代码切换数据库无感
 * leaf/gate 网关模块，负责游戏客户端的接入
 * leaf/go 用于创建能够被 Leaf 管理的 goroutine
 * leaf/log 日志相关
@@ -58,12 +58,12 @@ Leaf 源码概览
 使用 Leaf 开发游戏服务器
 ---------------
 
-[LeafServer](https://github.com/name5566/leafserver) 是一个基于 Leaf 开发的游戏服务器，我们以 LeafServer 作为起点。
+[LeafServer](https://github.com/taills/leafserver) 是一个基于 Leaf 开发的游戏服务器，我们以 LeafServer 作为起点。
 
 获取 LeafServer：
 
 ```
-git clone https://github.com/name5566/leafserver
+git clone https://github.com/taills/leafserver
 ```
 
 设置 leafserver 目录到 GOPATH 环境变量后获取 Leaf：
@@ -516,6 +516,55 @@ func init() {
 ```
 
 更加详细的用法可以参考 [leaf/recordfile](recordfile)。
+
+数据库
+---------------
+
+leaf/db 通过统一的 `Store` 接口屏蔽底层数据库差异，目前提供两种实现：
+
+* `leaf/db/sqlite`：基于纯 Go 驱动 `modernc.org/sqlite`，无需 CGO，开箱即用，适合单机与开发环境
+* `leaf/db/postgres`：基于 `jackc/pgx/v5`，兼容 PostgreSQL 18，适合生产环境
+
+两种实现的 API 完全一致，业务代码只依赖 `db.Store` 接口，切换数据库时无需改动业务逻辑：
+
+```go
+package main
+
+import (
+	"context"
+
+	"github.com/name5566/leaf/db"
+	"github.com/name5566/leaf/db/sqlite"
+	// "github.com/name5566/leaf/db/postgres"
+)
+
+func main() {
+	// 切换到 PostgreSQL 只需替换下面这一行：
+	// store, err := postgres.Open("postgres://user:pass@localhost:5432/game?sslmode=disable")
+	store, err := sqlite.Open("game.db") // 或 ":memory:"
+	if err != nil {
+		panic(err)
+	}
+	defer store.Close()
+
+	ctx := context.Background()
+
+	// 自增序列：常用于分配玩家 ID、房间 ID 等
+	playerID, _ := store.NextSeq(ctx, "player")
+
+	// KV 持久化
+	_ = store.Set(ctx, "player:1", []byte(`{"name":"leaf"}`))
+	data, ok, _ := store.Get(ctx, "player:1")
+	_ = data
+	_ = ok
+	_ = playerID
+
+	// 复杂场景可使用原生 SQL（占位符统一写 "?"，框架自动转换为目标方言）
+	_, _ = store.Exec(ctx, `CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, owner TEXT)`)
+}
+```
+
+`Store` 接口同时提供 `Exec` / `Query` / `QueryRow` 原生 SQL 逃生舱以及 `IsDup`（判断唯一约束冲突）等辅助方法。
 
 了解更多
 ---------------

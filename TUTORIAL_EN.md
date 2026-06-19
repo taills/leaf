@@ -14,7 +14,7 @@ Leaf champions below philosophies:
 Leaf's Modules
 --------------
 
-A game server implemented with Leaf may include many modules (e.g. [LeafServer](https://github.com/name5566/leafserver)) which all share below traits:
+A game server implemented with Leaf may include many modules (e.g. [LeafServer](https://github.com/taills/leafserver)) which all share below traits:
 
 * Each module runs inside a separate goroutine
 * Modules communicate with one another via a light weight RPC channel([leaf/chanrpc](chanrpc))
@@ -51,7 +51,7 @@ Leaf source code directories
 ----------------------------
 
 * leaf/chanrpc : RPC channel for inter-modules communication
-* leaf/db : Database Utilities with [MongoDB](https://www.mongodb.org/) support
+* leaf/db : Database utilities exposing a unified `Store` interface backed by [SQLite](https://www.sqlite.org/) (pure-Go `modernc.org/sqlite`) and [PostgreSQL](https://www.postgresql.org/) (`jackc/pgx/v5`, PG 18 compatible); business code can switch databases without any change
 * leaf/gate : Gate module that connects to client
 * leaf/go : Factory of goroutine that manageable for Leaf
 * leaf/log : Logging
@@ -63,12 +63,12 @@ Leaf source code directories
 How to use Leaf
 ---------------
 
-[LeafServer](https://github.com/name5566/leafserver) is a game server developped with Leaf. Let's start with it.
+[LeafServer](https://github.com/taills/leafserver) is a game server developped with Leaf. Let's start with it.
 
 Download the source code of LeafServer：
 
 ```
-git clone https://github.com/name5566/leafserver
+git clone https://github.com/taills/leafserver
 ```
 
 Download and install leafserver to GOPATH:
@@ -521,6 +521,56 @@ func init() {
 ```
 
 Refer to [leaf/recordfile](recordfile) for more details.
+
+Database
+--------
+
+leaf/db hides the underlying database behind a single `Store` interface, with two implementations:
+
+* `leaf/db/sqlite`: built on the pure-Go `modernc.org/sqlite` driver (no CGO required), ideal for single-node and development setups
+* `leaf/db/postgres`: built on `jackc/pgx/v5`, PostgreSQL 18 compatible, ideal for production
+
+Both expose the exact same API. Business code depends only on `db.Store`, so switching databases requires no change to game logic:
+
+```go
+package main
+
+import (
+	"context"
+
+	"github.com/name5566/leaf/db"
+	"github.com/name5566/leaf/db/sqlite"
+	// "github.com/name5566/leaf/db/postgres"
+)
+
+func main() {
+	// Switching to PostgreSQL only changes this single line:
+	// store, err := postgres.Open("postgres://user:pass@localhost:5432/game?sslmode=disable")
+	store, err := sqlite.Open("game.db") // or ":memory:"
+	if err != nil {
+		panic(err)
+	}
+	defer store.Close()
+
+	ctx := context.Background()
+
+	// Auto-increment sequence: handy for allocating player / room ids
+	playerID, _ := store.NextSeq(ctx, "player")
+
+	// KV persistence
+	_ = store.Set(ctx, "player:1", []byte(`{"name":"leaf"}`))
+	data, ok, _ := store.Get(ctx, "player:1")
+	_ = data
+	_ = ok
+	_ = playerID
+
+	// For complex cases use raw SQL (write "?" placeholders; the framework
+	// rewrites them for the active dialect).
+	_, _ = store.Exec(ctx, `CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, owner TEXT)`)
+}
+```
+
+The `Store` interface also exposes raw `Exec` / `Query` / `QueryRow` escape hatches plus helpers such as `IsDup` (detects unique-constraint violations).
 
 Learn more
 ----------

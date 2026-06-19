@@ -9,23 +9,21 @@ func RandGroup(p ...uint32) int {
 		panic("args not found")
 	}
 
-	r := make([]uint32, len(p))
-	for i := 0; i < len(p); i++ {
-		if i == 0 {
-			r[0] = p[0]
-		} else {
-			r[i] = r[i-1] + p[i]
-		}
+	// Total weight. Computed in a single pass without allocating a cumulative
+	// slice, so RandGroup performs zero heap allocations.
+	var sum uint32
+	for _, w := range p {
+		sum += w
 	}
-
-	rl := r[len(r)-1]
-	if rl == 0 {
+	if sum == 0 {
 		return 0
 	}
 
-	rn := uint32(rand.Int63n(int64(rl)))
-	for i := 0; i < len(r); i++ {
-		if rn < r[i] {
+	rn := uint32(rand.Int63n(int64(sum)))
+	var cumulative uint32
+	for i, w := range p {
+		cumulative += w
+		if rn < cumulative {
 			return i
 		}
 	}
