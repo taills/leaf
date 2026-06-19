@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/v2/log"
 )
 
 type TCPServer struct {

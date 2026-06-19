@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/taills/leaf/chanrpc"
-	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/v2/chanrpc"
+	"github.com/taills/leaf/v2/log"
 	"reflect"
 )
 

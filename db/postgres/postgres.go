@@ -9,7 +9,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/taills/leaf/db"
+	"github.com/taills/leaf/v2/db"
 	"github.com/jackc/pgx/v5/pgconn"
 	_ "github.com/jackc/pgx/v5/stdlib" // registers the "pgx" database/sql driver
 )

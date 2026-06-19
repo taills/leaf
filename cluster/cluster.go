@@ -1,8 +1,8 @@
 package cluster
 
 import (
-	"github.com/taills/leaf/conf"
-	"github.com/taills/leaf/network"
+	"github.com/taills/leaf/v2/conf"
+	"github.com/taills/leaf/v2/network"
 	"time"
 )
 

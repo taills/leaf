@@ -2,7 +2,7 @@ package g_test
 
 import (
 	"fmt"
-	"github.com/taills/leaf/go"
+	"github.com/taills/leaf/v2/go"
 	"time"
 )
 

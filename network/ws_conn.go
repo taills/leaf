@@ -3,7 +3,7 @@ package network
 import (
 	"errors"
 	"github.com/gorilla/websocket"
-	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/v2/log"
 	"net"
 	"sync"
 )

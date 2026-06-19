@@ -1,7 +1,7 @@
 package log_test
 
 import (
-	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/v2/log"
 	l "log"
 )
 

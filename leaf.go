@@ -1,11 +1,11 @@
 package leaf
 
 import (
-	"github.com/taills/leaf/cluster"
-	"github.com/taills/leaf/conf"
-	"github.com/taills/leaf/console"
-	"github.com/taills/leaf/log"
-	"github.com/taills/leaf/module"
+	"github.com/taills/leaf/v2/cluster"
+	"github.com/taills/leaf/v2/conf"
+	"github.com/taills/leaf/v2/console"
+	"github.com/taills/leaf/v2/log"
+	"github.com/taills/leaf/v2/module"
 	"os"
 	"os/signal"
 	"syscall"

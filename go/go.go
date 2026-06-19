@@ -2,8 +2,8 @@ package g
 
 import (
 	"container/list"
-	"github.com/taills/leaf/conf"
-	"github.com/taills/leaf/log"
+	"github.com/taills/leaf/v2/conf"
+	"github.com/taills/leaf/v2/log"
 	"runtime"
 	"sync"
 )

@@ -2,7 +2,7 @@ package timer_test
 
 import (
 	"fmt"
-	"github.com/taills/leaf/timer"
+	"github.com/taills/leaf/v2/timer"
 	"time"
 )
 

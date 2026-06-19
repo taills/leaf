@@ -8,7 +8,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/taills/leaf/db"
+	"github.com/taills/leaf/v2/db"
 	sqlite3 "modernc.org/sqlite"
 	sqlite3lib "modernc.org/sqlite/lib"
 )

@@ -100,7 +100,7 @@ go install server
 package msg
 
 import (
-	"github.com/taills/leaf/network"
+	"github.com/taills/leaf/v2/network"
 )
 
 var Processor network.Processor
@@ -116,7 +116,7 @@ Processor 为消息的处理器（可由用户自定义），这里我们使用 
 package msg
 
 import (
-	"github.com/taills/leaf/network/json"
+	"github.com/taills/leaf/v2/network/json"
 )
 
 // 使用默认的 JSON 消息处理器（默认还提供了 protobuf 消息处理器）
@@ -157,8 +157,8 @@ func init() {
 package internal
 
 import (
-	"github.com/taills/leaf/log"
-	"github.com/taills/leaf/gate"
+	"github.com/taills/leaf/v2/log"
+	"github.com/taills/leaf/v2/gate"
 	"reflect"
 	"server/msg"
 )
@@ -319,7 +319,7 @@ var (
 package internal
 
 import (
-	"github.com/taills/leaf/module"
+	"github.com/taills/leaf/v2/module"
 	"server/base"
 )
 
@@ -355,7 +355,7 @@ func (m *Module) OnDestroy() {
 package internal
 
 import (
-	"github.com/taills/leaf/gate"
+	"github.com/taills/leaf/v2/gate"
 )
 
 func init() {
@@ -533,9 +533,9 @@ package main
 import (
 	"context"
 
-	"github.com/taills/leaf/db"
-	"github.com/taills/leaf/db/sqlite"
-	// "github.com/taills/leaf/db/postgres"
+	"github.com/taills/leaf/v2/db"
+	"github.com/taills/leaf/v2/db/sqlite"
+	// "github.com/taills/leaf/v2/db/postgres"
 )
 
 func main() {
@@ -569,4 +569,4 @@ func main() {
 了解更多
 ---------------
 
-阅读 Wiki 获取更多的帮助：[https://github.com/taills/leaf/wiki](https://github.com/taills/leaf/wiki)
+阅读 Wiki 获取更多的帮助：[https://github.com/taills/leaf/v2/wiki](https://github.com/taills/leaf/v2/wiki)

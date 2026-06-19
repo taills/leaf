@@ -1,10 +1,10 @@
 package module
 
 import (
-	"github.com/taills/leaf/chanrpc"
-	"github.com/taills/leaf/console"
-	"github.com/taills/leaf/go"
-	"github.com/taills/leaf/timer"
+	"github.com/taills/leaf/v2/chanrpc"
+	"github.com/taills/leaf/v2/console"
+	"github.com/taills/leaf/v2/go"
+	"github.com/taills/leaf/v2/timer"
 	"time"
 )
 
