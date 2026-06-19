@@ -1,10 +1,12 @@
 package network
 
 import (
-	"github.com/taills/leaf/log"
+	"errors"
 	"net"
 	"sync"
 	"time"
+
+	"github.com/taills/leaf/log"
 )
 
 type TCPServer struct {
@@ -67,7 +69,8 @@ func (server *TCPServer) run() {
 	for {
 		conn, err := server.ln.Accept()
 		if err != nil {
-			if server.ln == nil {
+			// 监听器被 Close 主动关闭：退出 accept 循环，让 wgLn.Wait() 解除阻塞。
+			if errors.Is(err, net.ErrClosed) {
 				return
 			}
 			if tempDelay == 0 {
